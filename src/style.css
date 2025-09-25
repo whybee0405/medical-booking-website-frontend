@@ -7,6 +7,33 @@ body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
+/* Navigation Styles */
+.navbar {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.nav-link {
+  position: relative;
+  font-weight: 500;
+}
+
+.book-now-chip {
+  box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.book-now-chip:hover {
+  box-shadow: 0 6px 20px 0 rgba(59, 130, 246, 0.4);
+  transform: translateY(-1px) scale(1.02);
+}
+
+.medical-logo {
+  background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+/* Button Styles */
 .btn-primary {
   @apply bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors;
 }
@@ -26,4 +53,16 @@ body {
 /* Loading spinner */
 .loading-spinner {
   @apply animate-spin h-5 w-5 border-2 border-blue-600 border-t-transparent rounded-full;
+}
+
+/* Mobile Menu Animation */
+.mobile-menu {
+  transform-origin: top;
+}
+
+/* Smooth Transitions */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
 }

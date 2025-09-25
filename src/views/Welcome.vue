@@ -1,87 +1,10 @@
 <template>
   <div class="min-h-screen bg-white" :class="{ 'page-loaded': isLoaded }">
-    <!-- Navigation -->
-    <nav class="navbar fixed w-full z-50 transition-all duration-300 ease-out">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-16">
-          <!-- Logo -->
-          <div class="flex-shrink-0 logo-container">
-            <div class="flex items-center space-x-3">
-              <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg medical-logo">
-                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/>
-                </svg>
-              </div>
-              <span class="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
-                CloudIA Medical
-              </span>
-            </div>
-          </div>
-
-          <!-- Desktop Navigation -->
-          <div class="hidden md:block">
-            <div class="ml-10 flex items-baseline space-x-8">
-              <button @click="smoothScroll('home')" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-all duration-200 hover:scale-105">Home</button>
-              <button @click="smoothScroll('services')" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-all duration-200 hover:scale-105">Services</button>
-              <button @click="smoothScroll('about')" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-all duration-200 hover:scale-105">About</button>
-              <button @click="smoothScroll('contact')" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-all duration-200 hover:scale-105">Contact</button>
-              
-              <!-- Authentication Links -->
-              <div class="flex items-center space-x-4">
-                <a href="http://localhost:8000/login" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-all duration-200 hover:scale-105">
-                  Login
-                </a>
-                <a href="http://localhost:8000/register" class="bg-gradient-to-r from-gray-600 to-gray-700 text-white px-4 py-2 rounded-full text-sm font-medium hover:shadow-lg transition-all duration-300 hover:scale-105 hover:from-gray-700 hover:to-gray-800">
-                  Register
-                </a>
-              </div>
-              
-              <a href="/admin/dashboard" class="cta-button bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-2 rounded-full font-medium hover:shadow-lg transition-all duration-300 hover:scale-105 hover:from-blue-600 hover:to-blue-700">
-                Patient Portal
-              </a>
-            </div>
-          </div>
-
-          <!-- Mobile menu button -->
-          <div class="md:hidden">
-            <button @click="mobileMenuOpen = !mobileMenuOpen" class="mobile-menu-button text-gray-700 hover:text-blue-600 transition-colors duration-200">
-              <svg class="h-6 w-6 transition-transform duration-300" :class="{ 'rotate-180': mobileMenuOpen }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" :d="mobileMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'" />
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        <!-- Mobile Navigation Menu -->
-        <div class="md:hidden mobile-menu" :class="{ 'mobile-menu-open': mobileMenuOpen }">
-          <div class="px-2 pt-2 pb-3 space-y-1 bg-white shadow-lg rounded-lg mt-2">
-            <button @click="smoothScroll('home'); mobileMenuOpen = false" class="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium w-full text-left transition-colors duration-200">Home</button>
-            <button @click="smoothScroll('services'); mobileMenuOpen = false" class="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium w-full text-left transition-colors duration-200">Services</button>
-            <button @click="smoothScroll('about'); mobileMenuOpen = false" class="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium w-full text-left transition-colors duration-200">About</button>
-            <button @click="smoothScroll('contact'); mobileMenuOpen = false" class="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium w-full text-left transition-colors duration-200">Contact</button>
-            
-            <!-- Mobile Authentication Links -->
-            <div class="border-t pt-2 mt-2">
-              <a href="http://localhost:8000/login" class="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium transition-colors duration-200">
-                Login
-              </a>
-              <a href="http://localhost:8000/register" class="block bg-gradient-to-r from-gray-600 to-gray-700 text-white px-3 py-2 rounded-lg text-base font-medium hover:shadow-lg transition-all duration-300 mt-2">
-                Register
-              </a>
-            </div>
-            
-            <div class="pt-2">
-              <a href="/admin/dashboard" class="block bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-full text-center font-medium hover:shadow-lg transition-all duration-300">
-                Patient Portal
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
+    <!-- Dynamic Navigation -->
+    <SharedNavigation @navigation-click="handleNavigationClick" />
 
     <!-- Hero Section -->
-    <section id="home" class="hero-section relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section id="home" class="hero-section relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
       <!-- Medical Hero Background -->
       <div class="absolute inset-0 hero-background">
         <!-- Gradient overlay -->
@@ -156,20 +79,20 @@
           <!-- Trust indicators -->
           <div class="hero-trust flex flex-wrap justify-center items-center gap-8 text-blue-200">
             <div class="trust-item flex items-center space-x-2">
-              <svg class="w-6 h-6 text-teal-300" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              <svg class="w-6 h-6 text-teal-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
               </svg>
               <span>24/7 Emergency Care</span>
             </div>
             <div class="trust-item flex items-center space-x-2">
-              <svg class="w-6 h-6 text-teal-300" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              <svg class="w-6 h-6 text-teal-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
               </svg>
               <span>Board Certified Doctors</span>
             </div>
             <div class="trust-item flex items-center space-x-2">
-              <svg class="w-6 h-6 text-teal-300" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              <svg class="w-6 h-6 text-teal-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
               </svg>
               <span>Insurance Accepted</span>
             </div>
@@ -222,8 +145,12 @@
             :class="{ 'scale-105': activeService === index }">
             
             <div class="service-icon mb-6">
-              <div :class="`w-16 h-16 bg-${service.color}-100 rounded-xl flex items-center justify-center group-hover:bg-${service.color}-200 transition-colors duration-300`">
-                <svg :class="`w-8 h-8 text-${service.color}-600`" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="w-16 h-16 rounded-xl flex items-center justify-center transition-colors duration-300"
+                :class="getServiceIconClasses(service.color)"
+              >
+                <svg class="w-8 h-8 transition-colors duration-300" 
+                  :class="getServiceIconColorClass(service.color)" 
+                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" :d="service.icon"/>
                 </svg>
               </div>
@@ -518,11 +445,16 @@
         </div>
       </div>
     </footer>
+    
+    <!-- Debug Panel (Development Only) -->
+    <AuthDebugPanel />
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, nextTick } from 'vue'
+import SharedNavigation from '../components/SharedNavigation.vue'
+import AuthDebugPanel from '../components/AuthDebugPanel.vue'
 
 // Document title
 document.title = "CloudIA Medical Center - Quality Healthcare You Can Trust"
@@ -599,6 +531,14 @@ const contactForm = ref({
 })
 
 // Smooth scroll function
+// Navigation handling
+const handleNavigationClick = (item) => {
+  if (item.section && document.getElementById(item.section)) {
+    smoothScroll(item.section)
+  }
+}
+
+// Smooth scroll function
 const smoothScroll = (elementId) => {
   const element = document.getElementById(elementId)
   if (element) {
@@ -607,6 +547,35 @@ const smoothScroll = (elementId) => {
       block: 'start'
     })
   }
+}
+
+// Service color mapping functions
+const getServiceIconClasses = (color) => {
+  const baseClasses = 'w-16 h-16 rounded-xl flex items-center justify-center transition-colors duration-300'
+  
+  // Use explicit color mapping for better reliability
+  if (color === 'blue') return `${baseClasses} bg-blue-100 group-hover:bg-blue-200`
+  if (color === 'red') return `${baseClasses} bg-red-100 group-hover:bg-red-200`
+  if (color === 'yellow') return `${baseClasses} bg-yellow-100 group-hover:bg-yellow-200`
+  if (color === 'green') return `${baseClasses} bg-green-100 group-hover:bg-green-200`
+  if (color === 'purple') return `${baseClasses} bg-purple-100 group-hover:bg-purple-200`
+  if (color === 'indigo') return `${baseClasses} bg-indigo-100 group-hover:bg-indigo-200`
+  
+  // Default fallback
+  return `${baseClasses} bg-blue-100 group-hover:bg-blue-200`
+}
+
+const getServiceIconColorClass = (color) => {
+  // Use explicit color mapping for better reliability
+  if (color === 'blue') return 'w-8 h-8 text-blue-600'
+  if (color === 'red') return 'w-8 h-8 text-red-600'
+  if (color === 'yellow') return 'w-8 h-8 text-yellow-600'
+  if (color === 'green') return 'w-8 h-8 text-green-600'
+  if (color === 'purple') return 'w-8 h-8 text-purple-600'
+  if (color === 'indigo') return 'w-8 h-8 text-indigo-600'
+  
+  // Default fallback
+  return 'w-8 h-8 text-blue-600'
 }
 
 // Counter animation function
@@ -941,6 +910,35 @@ onMounted(async () => {
   
   .hero-subtitle {
     font-size: 1.1rem;
+  }
+}
+
+/* Handle smaller height screens */
+@media (max-height: 600px) {
+  .hero-section {
+    min-height: calc(100vh - 64px);
+    padding-top: 80px;
+  }
+  
+  .hero-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .hero-buttons {
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-height: 500px) {
+  .hero-section {
+    min-height: auto;
+    padding: 100px 0 60px 0;
   }
 }
 

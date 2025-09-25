@@ -1,11 +1,17 @@
 <template>
-  <router-view />
+  <!-- Show loading screen while authentication is being verified -->
+  <AuthLoader v-if="authStore.isLoading" />
+  
+  <!-- Show main app once auth is verified -->
+  <router-view v-else />
 </template>
 
-<script>
-export default {
-  name: 'App'
-}
+<script setup>
+import { computed } from 'vue'
+import { useAuthStore } from '@/stores/auth'
+import AuthLoader from '@/components/AuthLoader.vue'
+
+const authStore = useAuthStore()
 </script>
 
 <style>

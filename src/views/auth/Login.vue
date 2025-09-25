@@ -272,6 +272,7 @@ const errors = ref({})
 const isLoaded = ref(false)
 
 const handleSubmit = async () => {
+  console.log('Login form submitted via JavaScript')
   errors.value = {}
 
   // Basic validation
@@ -285,7 +286,9 @@ const handleSubmit = async () => {
   }
 
   try {
+    console.log('Calling authStore.login...')
     await authStore.login(form.email, form.password, form.remember)
+    console.log('Login successful, redirecting...')
     router.push({ name: 'dashboard' })
   } catch (error) {
     console.error('Login failed:', error)
